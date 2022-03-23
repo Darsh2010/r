@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>School Chatapp</title>
+<link href="https://fonts.googleapis.com/css?family=Yeon+Sung&display=swap" rel="stylesheet"><meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+<body style="background-color:rgb(43, 235, 219); ">
+    <center>
+      <img src="welcome.gif" height="300" style="border: 1; border-color: black;">
+<h1 style="font-family: ramaraja;">SSC Chatapp</h1>
+<h2 id="user_name"></h2>
+<br><br><h3 style="font-family:roboto;">#Add Room</h3>
+<br>
+<input id="room_name" placeholder="Enter Room Name">
+<br><br><button onclick="add_room">#Add Room</button>
+<br><br>
+<h2>#Trending Rooms</h2>
+<h3 id="trend"></h3>
+</center>
+<script>
+user_name= localStorage.getItem("user_name");
+document.getElementById("user_name").innerHTML="Welcome "+user_name +" !";
+function add_room(){
+  room_name=document.getElementById("room_name").value;
+  firebase.database().ref("/").on(room_name).update({
+    purpose :"adding room name"
+  });
+  localStorage.setItem("room_name",room_name);
+window.location = "add.html";
+}
+function getData() {child=firebase.database().ref("/").on('value', function(snapshot) {document.getElementById("output").innerHTML = "";snapshot.forEach(function(childSnapshot) {childKey  = childSnapshot.key;
+       Room_names = childKey;
+      //Start code
+
+      //End code
+      });});}
+getData();
+document.getElementById("trend").innerHTML=child;
+</script>
+</body>
+</html>
